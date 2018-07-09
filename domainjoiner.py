@@ -597,8 +597,6 @@ def mainDomain():
 		samba = Samba()
 		control = input('Does /etc/hosts contain domain? [Y]/[n]')
 		info = ""
-		control = input('Does /etc/hosts contain domain? [Y]/[n]')
-		info = ""
 		if control.upper() == 'Y' or not control:
 			while True:
 				domain = input('Enter Domain Name: ')
