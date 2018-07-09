@@ -597,6 +597,8 @@ def mainDomain():
 		samba = Samba()
 		control = input('Does /etc/hosts contain domain? [Y]/[n]')
 		info = ""
+		control = input('Does /etc/hosts contain domain? [Y]/[n]')
+		info = ""
 		if control.upper() == 'Y' or not control:
 			while True:
 				domain = input('Enter Domain Name: ')
@@ -605,12 +607,15 @@ def mainDomain():
 						print('Ooops. Enter Only Alpha Value for Domain Name!')
 						#check enter domain name and reject if it is integer 
 					else:
-						
 						info = samba.get_domain_info(domain)
-						print("Realm is: "+info[0])
-						print("Workgroup Name: "+info[1])
-						samba.set(host,info[0],info[1])
-						break										
+						if info[0] == 'error':
+							print('Ooops. This domain can not find! Enter Domain Name Correctly.')
+							
+						else:
+							print("Realm is: "+info[0])
+							print("Workgroup Name: "+info[1])
+							samba.set(host,info[0],info[1])
+							break										
 				else:
 					print('Ooops. Enter Domain Name!')
 					
@@ -619,15 +624,16 @@ def mainDomain():
 				ip_address = input("Enter IP Address of Domain: ")
 				if ip_address:
 					info = samba.get_domain_info(ip_address)
-					print("Realm is: "+info[0])
-					print("Workgroup Name: "+info[1])
-					samba.set(host,info[0],info[1])
-					break										
+					if info[0] == 'error':
+						print('Ooops. This IP address of domain can not find! Enter IP Address Correctly.')
+					else:	
+						print("Realm is: "+info[0])
+						print("Workgroup Name: "+info[1])
+						samba.set(host,info[0],info[1])
+						break										
 				else:
 					print('Ooops. Enter IP Address! Ex: [8.8.8.8]')
 		
-
-
 		### /etc/krb.conf
 		kerberos = Kerberos()
 		realm = info[0]
